@@ -1,4 +1,5 @@
-#include "Window.h"
+
+#include "App.h"
 
 
 int CALLBACK WinMain(
@@ -7,21 +8,26 @@ int CALLBACK WinMain(
 	LPSTR		lpCmdLine,
 	int			nCmdShow)
 {
-	Window WNDCLASS(400, 400, "Window Class revision (:");
+	//Window WNDCLASS(400, 400, "Window Class revision (:");
 	//message pump
-	MSG msg;
-	BOOL getResult;
-
-	while ((getResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
+	try
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		return App{}.init();
 	}
 
-	if (getResult == -1)
+	catch (const ExceptionHandler& e)
 	{
-		return -1;
+		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONERROR);
+	}
+	catch (const std::exception& e)
+	{
+		MessageBox(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONERROR);
+	}
+	catch (...)
+	{
+		MessageBox(nullptr, "No Details Available", "Unknown Exception", MB_OK | MB_ICONERROR);
 	}
 
-	return msg.wParam;
+	return -1;
+
 }
