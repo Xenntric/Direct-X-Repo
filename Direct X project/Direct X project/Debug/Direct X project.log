@@ -1,2 +1,6 @@
-﻿  Window.cpp
+﻿  App.cpp
+  Window.cpp
+  WinMain.cpp
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Window.cpp(138,7): warning C4101: 'getResult': unreferenced local variable
+  LINK : F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Debug\Direct X project.exe not found or not built by the last incremental link; performing full link
   Direct X project.vcxproj -> F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Debug\Direct X project.exe
