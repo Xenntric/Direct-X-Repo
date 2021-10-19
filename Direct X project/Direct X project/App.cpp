@@ -20,8 +20,13 @@ int App::init()
 
 void App::Update()
 {
-	const float t = time.Peek();
+	const float c = sin(time.Peek()) / 2.0f + 0.5f;
+	wnd.Render().ClearBuffer(c, c, c);
+
+	wnd.Render().EndFrame();
+
+	/*const float t = time.Peek();
 	std::ostringstream oss;
-	oss << "Time Elapsed: " << std::setprecision(1) << std::fixed << t << "sec";
+	oss << "Time Elapsed: " << std::setprecision(1) << std::fixed << t << "sec";*/
 
 }

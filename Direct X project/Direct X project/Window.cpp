@@ -61,6 +61,8 @@ Window::Window(int width, int height, const char* name)
 		nullptr, nullptr, WindowClass::GetInstance(), this);
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+
+	pRenderer = std::make_unique<Renderer> (hWnd);
 }
 
 Window::~Window()
@@ -92,44 +94,44 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	switch (msg)
 	{
 		//on close window
-	case WM_CLOSE:
-	{
-		PostQuitMessage(000);
-		return 0;
-	}
+		case WM_CLOSE:
+		{
+			PostQuitMessage(000);
+			return 0;
+		}
 
-	//keyboard input
-	case WM_CHAR:
-	{
-		//clears and appends windows title to user input
-		static std::string title;
-		title.push_back((char)wParam);
-		SetWindowText(hWnd, title.c_str());
-		break;
-	}
+		//keyboard input
+		case WM_CHAR:
+		{
+			//clears and appends windows title to user input
+			static std::string title;
+			title.push_back((char)wParam);
+			SetWindowTitle(title);
+			break;
+		}
 
-	//mouse input
-	case WM_LBUTTONDOWN:
-	{
-		//changes windows title to mouse coords
-		const POINTS pt = MAKEPOINTS(lParam);
-		std::ostringstream oss;
-		oss << "(" << pt.x << "," << pt.y << ")";
-		SetWindowText(hWnd, oss.str().c_str());
-		break;
-	}
+		//mouse input
+		case WM_LBUTTONDOWN:
+		{
+			//changes windows title to mouse coords
+			const POINTS pt = MAKEPOINTS(lParam);
+			std::ostringstream oss;
+			oss << "(" << pt.x << "," << pt.y << ")";
+			SetWindowTitle(oss.str());
+			break;
+		}
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-//void Window::SetWindowTitle(const std::string& title)
-//{
-//	if (SetWindowText (hWnd, title.c_str() == 0)
-//	{
-//
-//	}
-//}
+void Window::SetWindowTitle(const std::string& title)
+{
+	if (SetWindowText (hWnd, title.c_str()) == 0)
+	{
+		throw WND_PREVIOUS_EXCEPT();
+	}
+}
 
 
 std::optional<int> Window::ProcessMessages()
@@ -155,6 +157,11 @@ std::optional<int> Window::ProcessMessages()
 	}
 
 	return msg.wParam;*/
+}
+
+Renderer& Window::Render()
+{
+	return *pRenderer;
 }
 
 Window::Exception::Exception(int line, const char* file, HRESULT hr) noexcept
