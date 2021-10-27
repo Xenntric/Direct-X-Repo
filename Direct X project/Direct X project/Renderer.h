@@ -1,5 +1,5 @@
 #pragma once
-#include <Windows.h>
+//#include <Windows.h>
 #include <d3d11.h>
 #include <vector>
 #include <wrl.h>
@@ -10,13 +10,13 @@ public:
 	Renderer(HWND hWnd);
 	Renderer(const Renderer&) = delete;
 	Renderer& operator = (const Renderer&) = delete;
-	~Renderer();
+	~Renderer() = default;
 	
 	void EndFrame();
 
 	void ClearBuffer(float red, float green, float blue) noexcept;
 
-	void DrawTestTriangle();
+	void DrawTestTriangle(float angle, float x, float y);
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;

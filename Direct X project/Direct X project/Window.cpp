@@ -20,8 +20,7 @@ Window::WindowClass::WindowClass() noexcept :
 	wc.hIcon = nullptr;
 	wc.hCursor = nullptr;
 	wc.hbrBackground = nullptr;
-	\
-		wc.lpszMenuName = nullptr;
+	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = GetName();
 	wc.hIconSm = nullptr;
 	RegisterClassEx(&wc);
@@ -118,6 +117,16 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			std::ostringstream oss;
 			oss << "(" << pt.x << "," << pt.y << ")";
 			SetWindowTitle(oss.str());
+			break;
+		}
+		case WM_MOUSEMOVE:
+		{
+			POINT mp;
+			GetCursorPos(&mp);
+
+			mouseX = mp.x;
+			mouseY = mp.y;
+			//OutputDebugString("ding");
 			break;
 		}
 	}

@@ -44,6 +44,7 @@ public:
 	Window& operator = (const Window&) = delete;
 	void SetWindowTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
+	double mouseX,mouseY;
 	Renderer& Render();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
