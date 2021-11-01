@@ -60,16 +60,48 @@ Renderer::Renderer(HWND hWnd)
 		nullptr,
 		&pTarget
 	);
-	//pBackBuffer->Release();
+	
+	D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+	dsDesc.DepthEnable = true;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	wrl::ComPtr<ID3D11DepthStencilState> pDSState;
+	pDevice->CreateDepthStencilState(&dsDesc, &pDSState);
+
+	pContext->OMSetDepthStencilState(pDSState.Get(), 1u);
+	
+	wrl::ComPtr<ID3D11Texture2D> pDepthStencil;
+	D3D11_TEXTURE2D_DESC descDepth = {};
+	descDepth.Width = 800u;
+	descDepth.Height = 600u;
+	descDepth.MipLevels = 1u;
+	descDepth.ArraySize = 1u;
+	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+	descDepth.SampleDesc.Quality = 0u;
+	descDepth.SampleDesc.Count = 1u;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	pDevice->CreateTexture2D(&descDepth, nullptr, &pDepthStencil);
+
+	//create depth stencil view
+	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
+	descDSV.Format = DXGI_FORMAT_D32_FLOAT;
+	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	descDSV.Texture2D.MipSlice = 0u;
+	pDevice->CreateDepthStencilView(pDepthStencil.Get(), &descDSV, &pDSV);
+	//bind depth stencil view
+	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
+
 }
 
 void Renderer::ClearBuffer(float red, float green, float blue) noexcept
 {
 	const float colour[] = { red, green, blue, 1.0f };
 	pContext->ClearRenderTargetView(pTarget.Get(), colour);
+	pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0F, 0u);
 }
 
-void Renderer::DrawTestTriangle(float angle, float x, float y)
+void Renderer::DrawTestTriangle(float angle, float x, float z)
 {
 
 	HRESULT hr;
@@ -82,26 +114,17 @@ void Renderer::DrawTestTriangle(float angle, float x, float y)
 			float y;
 			float z;
 		} pos;
-		
-		struct 
-		{
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
-		unsigned char a;
-		} colour;
-		
 	};
 
 	Vertex vertices[]{
-		{ -1.0f,	-1.0f,	-1.0f,	255,	0,		0 },
-		{ 1.0f,		-1.0f,	-1.0f,	0,		255,	0 },
-		{ -1.0f,	1.0f,	-1.0f,	0,		0,		255 },
-		{ 1.0f,		1.0f,	-1.0f,	255,	255,	0 },
-		{ -1.0f,	-1.0f,	1.0f,	255,	0,		255 },
-		{ 1.0f,		-1.0f,	1.0f,	0,		255,	255 },
-		{ -1.0f,	1.0f,	1.0f,	0,		0,		0 },
-		{ 1.0f,		1.0f,	1.0f,	255,	255,	255 },
+		{ -1.0f,	-1.0f,	-1.0f},
+		{ 1.0f,		-1.0f,	-1.0f},
+		{ -1.0f,	1.0f,	-1.0f},
+		{ 1.0f,		1.0f,	-1.0f},
+		{ -1.0f,	-1.0f,	1.0f},
+		{ 1.0f,		-1.0f,	1.0f},
+		{ -1.0f,	1.0f,	1.0f},
+		{ 1.0f,		1.0f,	1.0f},
 	};
 
 
@@ -160,7 +183,7 @@ void Renderer::DrawTestTriangle(float angle, float x, float y)
 			dx::XMMatrixRotationZ(angle) * 
 			dx::XMMatrixRotationX(angle)*
 			dx::XMMatrixScaling(		3.0f / 4.0f,1.0f,1.0f) *
-			dx::XMMatrixTranslation(	x,y,3.0f) *
+			dx::XMMatrixTranslation(	x,0.0f,z + 3.0f) *
 			dx::XMMatrixPerspectiveLH(	1.0f,3.0f/4.0f, 0.4f, 10.0f)
 			)
 		}
@@ -181,15 +204,55 @@ void Renderer::DrawTestTriangle(float angle, float x, float y)
 	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
 
 	//Pixel shader
+	
+	struct ConstantBuffer2
+	{
+		struct
+		{
+			float r;
+			float g;
+			float b;
+			float a;
+		} face_colours[6];
+	};
+	const ConstantBuffer2 cb2 =
+	{
+		{
+			{1.0f,0.0f,1.0f},
+			{1.0f,0.0f,0.0f},
+			{0.0f,1.0f,0.0f},
+			{0.0f,0.0f,1.0f},
+			{1.0f,1.0f,0.0f},
+			{0.0f,1.0f,1.0f},
+		}
+	};
+
+	wrl::ComPtr<ID3D11Buffer> pConstantBuffer2;
+	D3D11_BUFFER_DESC cbd2;
+	cbd2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cbd2.Usage = D3D11_USAGE_DEFAULT;
+	cbd2.CPUAccessFlags = 0u;
+	cbd2.MiscFlags = 0u;
+	cbd2.ByteWidth = sizeof(cb2);
+	cbd2.StructureByteStride = 0u;
+	D3D11_SUBRESOURCE_DATA csd2 = {};
+	csd2.pSysMem = &cb2;
+	pDevice->CreateBuffer(&cbd2, &csd2, &pConstantBuffer2);
+
+	pContext->PSSetConstantBuffers(0u, 1u, pConstantBuffer2.GetAddressOf());
+
 	// create pixel shader
 	wrl::ComPtr<ID3D11PixelShader> pPixelShader;
 	wrl::ComPtr<ID3DBlob> pBlob;
 	D3DReadFileToBlob(L"PixelShader.cso", &pBlob);
 	pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader);
 
+
+
 	// bind pixel shader
 	pContext->PSSetShader(pPixelShader.Get(), nullptr, 0u);
 
+	//pixel Constant buffer
 
 	// create vertex shader
 	wrl::ComPtr<ID3D11VertexShader> pVertexShader;
@@ -205,8 +268,6 @@ void Renderer::DrawTestTriangle(float angle, float x, float y)
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
 		{ "POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
-		{ "COLOUR",0,DXGI_FORMAT_R8G8B8A8_UNORM,0,12u,D3D11_INPUT_PER_VERTEX_DATA,0 },
-		
 	};
 	pDevice->CreateInputLayout(
 		ied, (UINT)std::size(ied),
@@ -216,11 +277,6 @@ void Renderer::DrawTestTriangle(float angle, float x, float y)
 
 	// bind vertex layout
 	pContext->IASetInputLayout(pInputLayout.Get());
-
-
-	// bind render target
-	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), nullptr);
-
 
 	// Set primitive topology to triangle list (groups of 3 vertices)
 	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
