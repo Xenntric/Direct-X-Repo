@@ -1,5 +1,5 @@
 
-#include "App.h"
+#include "Game.h"
 
 
 int CALLBACK WinMain(
@@ -12,7 +12,7 @@ int CALLBACK WinMain(
 	//message pump
 	try
 	{
-		return App{}.init();
+		return Game{}.init();
 	}
 
 	catch (const ExceptionHandler& e)

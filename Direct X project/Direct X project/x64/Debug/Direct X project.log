@@ -1,3 +1,35 @@
-﻿  Renderer.cpp
-F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Renderer.cpp(107,10): warning C4101: 'hr': unreferenced local variable
-  Direct X project.vcxproj -> F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\x64\Debug\Direct X project.exe
+﻿  Cube.cpp
+  Drawable.cpp
+  Game.cpp
+  Sphere.cpp
+  TransformBuffer.cpp
+  Vec3.cpp
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(51,9): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(59,8): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(60,8): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(61,8): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(67,1): error C2511: 'float Vec3::Dot(Vec3,Vec3)': overloaded member function not found in 'Vec3'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.h(4): message : see declaration of 'Vec3'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,22): error C2597: illegal reference to non-static member 'Vec3::x'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,22): error C3867: 'Vec3::x': non-standard syntax; use '&' to create a pointer to member
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,22): error C2568: '*': unable to resolve function overload
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,33): error C2597: illegal reference to non-static member 'Vec3::y'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,33): error C3867: 'Vec3::y': non-standard syntax; use '&' to create a pointer to member
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,33): error C2568: '*': unable to resolve function overload
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,43): error C2597: illegal reference to non-static member 'Vec3::z'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,43): error C3867: 'Vec3::z': non-standard syntax; use '&' to create a pointer to member
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(68,43): error C2568: '*': unable to resolve function overload
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(85,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Vec3.cpp(86,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(22,9): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(23,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(40,52): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'Sphere::{ctor}::Vertex'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(40,52): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(53,17): error C2440: 'initializing': cannot convert from 'float' to 'Vec3'
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(56,36): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ] (compiling source file Game.cpp)
+F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Game.cpp(14): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,int,float,float,0>(Renderer &,int &&,float &&,float &&)' being compiled
