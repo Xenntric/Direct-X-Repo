@@ -1,16 +1,15 @@
 #pragma once
-#include "Drawable.h"
-
+#include "DrawableBase.h"
+#include "IndexedTriangleList.h"
 #define _USE_MATH_DEFINES
-
 #include<cmath>
-
 #include<ioStream>
 
 
-class Sphere : public Drawable
+class Sphere : public DrawableBase<Sphere>
 {
 public:
+	//template<class V> IndexedTriangleList<V> Tessalate();
 	Sphere(Renderer& render, float x, float y, float z, float radius, int sliceCount, int stackCount);
 
 	void Update(float dt) noexcept override;

@@ -4,9 +4,9 @@
 	Set the vector's x, y, and z components to the parameters supplied*/
 Vec3::Vec3(float x_, float y_, float z_)
 {
-	x = -6;
-	y = 8;
-	z = 1;
+	x = x_;
+	y = y_;
+	z = z_;
 }
 
 /* Add Member Function

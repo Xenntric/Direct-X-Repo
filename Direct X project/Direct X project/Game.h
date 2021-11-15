@@ -17,4 +17,5 @@ private:
 	Window wnd;
 	GameTimer time;
 	std::vector<std::unique_ptr<class Cube>> cubes;
+	std::vector<std::unique_ptr<class Sphere>> spheres;
 };

@@ -4,7 +4,8 @@
 	Set the vector's x, y, and z components to the parameters supplied*/
 Vec2::Vec2(float x_, float y_)
 {
-
+	x = x_;
+	y = y_;
 }
 
 /* Add Member Function

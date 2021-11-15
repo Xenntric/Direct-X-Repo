@@ -1,6 +1,7 @@
 #include "Sphere.h"
 #include "BindableTemplate.h"
-#include <vector>
+#include <string>
+
 Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int sliceCount, int stackCount)
 	:
 	x(x),
@@ -19,8 +20,8 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 	phi(),
 	sliceCount(sliceCount),
 	stackCount(stackCount),
-	phiStep(pi/stackCount),
-	thetaStep(2.0f*pi/sliceCount)
+	phiStep(),
+	thetaStep()
 {
 
 	struct Vertex
@@ -31,44 +32,34 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 			float y;
 			float z;
 		} pos;
-
-		struct
-		{
-			float nx;
-			float ny;
-			float nz;
-		} normalisedPos;
-		struct
-		{
-			float tx;
-			float ty;
-			float tz;
-		} tangentPos;
-		struct 
-		{
-			float u;
-			float v;
-		}uv;
-
 	};
 
+	phiStep = (pi / stackCount);
+	thetaStep = (2.0f * pi / sliceCount);
 	std::vector<Vertex> vertices = {};
-
 	// south pole
-	vertices.push_back(Vertex(0.0f, -1.0f, 0.0, radius));
+	vertices.push_back(Vertex{ 0.0f, -radius, 0.0 });
+
+
 
 	for (int i = 1; i <= stackCount - 1; i++) 
 	{
 		phi = i * phiStep;
+		std::string phistep = "phi: " + std::to_string(phi) + "\n";
+		//OutputDebugString(phistep.c_str());
+		
 		for (int j = 0; j <= sliceCount; j++) 
 		{
-			theta = j * thetaStep;
-			Vec3 pos = Vec3(
-				(radius * sin(phi) * cos(theta)),
-				(radius * cos(phi)),
-				(radius * sin(phi) * sin(theta)));
 
-			Vec3 currentRadius = Vec3(
+			theta = j * thetaStep;
+			std::string thetastep = "theta: " + std::to_string(theta) +"\n";
+			//OutputDebugString(thetastep.c_str());
+
+			Vec3 pos = Vec3((radius * sinf(phi) * cosf(theta)),
+					(radius * cosf(phi)),
+					(radius * sinf(phi) * sinf(theta)));
+
+			/*Vec3 currentRadius = Vec3(
 				-radius * sin(phi) * sin(theta), 
 				0, 
 				radius * sin(phi) * cos(theta));
@@ -77,16 +68,24 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 			Vec3 posNorm = pos;
 			posNorm.Normalize();
 
-			Vec2 UV = Vec2(theta / (pi * 2), phi / pi);
+			Vec2 UV = Vec2(theta / (pi * 2), phi / pi);*/
 
 			// Vertex( x,radius,z,?,?,y,?,?,?,?,?,)
-			vertices.push_back(Vertex(
-				pos.x,		pos.y,		pos.z,
-				posNorm.x,	posNorm.y,	posNorm.z,
-				UV.x,UV.y));
+		
+			vertices.emplace_back(Vertex{	pos.x, 
+											pos.y, 
+											pos.z});
+
+			std::string debug =  "{" +	std::to_string(pos.x) + ", " +
+										std::to_string(pos.y) + ", " +
+										std::to_string(pos.z) + "}\n" ;
+
+			OutputDebugString(debug.c_str());
 
 		}
 	}
+	vertices.push_back(Vertex{ 0.0f, radius, 0.0 });
+
 
 	AddBind(std::make_unique<VertexBuffer>(render, vertices));
 
@@ -98,14 +97,39 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 
 	std::vector<unsigned short> indices = {};
 
-	for (size_t i = 1; i < sliceCount; i++)
+	for (unsigned short i = 1; i <= sliceCount; i++)
 	{
-		indices.pushback()
+		indices.push_back(0);
+		indices.push_back(i + 1);
+		indices.push_back(i);
 	}
 
+	int baseIndex = 1;
+	int ringVertexCount = sliceCount + 1;
+
+	for (int i = 0; i < stackCount - 2; i++) {
+		for (int j = 0; j < sliceCount; j++) {
+			indices.push_back(baseIndex +	i		* ringVertexCount + j);
+			indices.push_back(baseIndex +	i		* ringVertexCount + j + 1);
+			indices.push_back(baseIndex + (	i + 1)	* ringVertexCount + j);
+			indices.push_back(baseIndex + (	i + 1)	* ringVertexCount + j);
+			indices.push_back(baseIndex +	i		* ringVertexCount + j + 1);
+			indices.push_back(baseIndex + (	i + 1)	* ringVertexCount + j + 1);
+		}
+	}
+
+	int southPoleIndex = vertices.size() - 1;
+	baseIndex = southPoleIndex - ringVertexCount;
+	for (int i = 0; i < sliceCount; i++) {
+		indices.push_back(southPoleIndex);
+		indices.push_back(baseIndex + i);
+		indices.push_back(baseIndex + i + 1);
+	}
+	
 	AddIndexBuffer(std::make_unique<IndexBuffer>(render, indices));
 
-	struct ConstantBuffer2
+
+	/*struct ConstantBuffer2
 	{
 		struct
 		{
@@ -126,7 +150,7 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 			{ 0.0f,1.0f,1.0f },
 		}
 	};
-	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(render, cb2));
+	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(render, cb2));*/
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 	{

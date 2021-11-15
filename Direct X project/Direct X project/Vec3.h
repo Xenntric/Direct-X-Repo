@@ -4,7 +4,6 @@
 class Vec3
 {
 public:
-	Vec3();
 	Vec3(float x_, float y_, float z_);
 
 	void Add(Vec3 a, Vec3 b);
