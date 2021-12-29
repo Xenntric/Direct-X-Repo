@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\x64\Debug\Direct X project.exe</FullPath>
+      <FullPath>C:\Users\Matthew\Source\Repos\Direct-X-Repo\Direct X project\x64\Debug\Direct X project.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\PixelShader.cso</FullPath>
+      <FullPath>C:\Users\Matthew\source\repos\Direct-X-Repo\Direct X project\Direct X project\PixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\VertexShader.cso</FullPath>
+      <FullPath>C:\Users\Matthew\source\repos\Direct-X-Repo\Direct X project\Direct X project\VertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

@@ -9,12 +9,13 @@ Game::Game()
 	wnd(800, 600, "Factory Pattern Refactor!! :D")
 {
 	//init cubes
-	/*for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 4; i++)
 	{
 		cubes.push_back(std::make_unique<Cube>(
 			wnd.Render(), i*5, 5.0f, 15.0f));
 		
-	}*/
+	}
+  
 	for (auto i = 0; i < 1; i++)
 	{
 		spheres.push_back(std::make_unique<Sphere>(
@@ -31,8 +32,32 @@ int Game::init()
 		{
 			return *ecode;
 		}
+		Inputs();
 		Update();
 		Render();
+	}
+}
+
+void Game::Inputs()
+{
+	while (!wnd.keyboard.KeyBufferIsEmpty())
+	{
+		KeyboardEvent event = wnd.keyboard.ReadKey();
+
+		unsigned char keycode = event.GetKeyCode();
+		std::string	outmsg = "Keycode: ";
+		outmsg += keycode;
+		outmsg += "\n";
+		OutputDebugStringA(outmsg.c_str());
+	}
+
+	while (!wnd.keyboard.CharBufferIsEmpty())
+	{
+		unsigned char ch = wnd.keyboard.ReadChar();
+		std::string	outmsg = "Char: ";
+		outmsg += ch;
+		outmsg += "\n";
+		OutputDebugStringA(outmsg.c_str());
 	}
 }
 
@@ -48,7 +73,6 @@ void Game::Update()
 	{
 		s->Update(dt);
 	}
-
 }
 
 void Game::Render()

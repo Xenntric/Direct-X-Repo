@@ -100,13 +100,56 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		}
 
 		//keyboard input
+
+		case WM_KEYDOWN:
+		{
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			if (keyboard.IsKeyAutoRepeat())
+			{
+				keyboard.OnKeyPressed(keycode);
+			}
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					keyboard.OnKeyPressed(keycode);
+				}
+			}
+
+			return 0;
+		}
+
+		case WM_KEYUP:
+		{
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			keyboard.OnKeyReleased(keycode);
+			return 0;
+		}
+
+
 		case WM_CHAR:
 		{
-			//clears and appends windows title to user input
+			unsigned char ch = static_cast<unsigned char>(wParam);
+			if (keyboard.IsCharAutoRepeat())
+			{
+				keyboard.OnChar(ch);
+			}
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					keyboard.OnChar(ch);
+				}
+			}
+			return 0;
+
+			/*//clears and appends windows title to user input
 			static std::string title;
 			title.push_back((char)wParam);
 			SetWindowTitle(title);
-			break;
+			break;*/
 		}
 
 		//mouse input
