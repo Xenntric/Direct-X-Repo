@@ -1,8 +1,5 @@
-﻿  Game.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\Direct X project\Game.cpp(21): message : see reference to function template instantiation 'std::unique_ptr<Sphere,std::default_delete<Sphere>> std::make_unique<Sphere,Renderer&,float,float,float,float,float,float,0>(Renderer &,float &&,float &&,float &&,float &&,float &&,float &&)' being compiled
-  Direct X project.vcxproj -> F:\University-year3\Advanced Technologies\Direct X Repo\Direct X project\x64\Debug\Direct X project.exe
+﻿  Sphere.cpp
+F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(23,9): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(24,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(117,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Direct X project.vcxproj -> F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\x64\Debug\Direct X project.exe

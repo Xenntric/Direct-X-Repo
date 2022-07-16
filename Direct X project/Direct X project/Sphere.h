@@ -16,6 +16,8 @@ public:
 
 	DirectX::XMMATRIX GetTransformXM() const noexcept override;
 
+	void setTransformXYZ(float x, float y, float z);
+	Vec3 getTransformXYZ();
 
 private:
 	//math constants

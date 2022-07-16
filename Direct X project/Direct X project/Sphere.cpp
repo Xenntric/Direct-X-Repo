@@ -20,8 +20,8 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 	phi(),
 	sliceCount(sliceCount),
 	stackCount(stackCount),
-	phiStep(),
-	thetaStep()
+	phiStep((pi / stackCount)),
+	thetaStep((2.0f * pi / sliceCount))
 {
 
 	struct Vertex
@@ -34,13 +34,9 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 		} pos;
 	};
 
-	phiStep = (pi / stackCount);
-	thetaStep = (2.0f * pi / sliceCount);
 	std::vector<Vertex> vertices = {};
 	// south pole
 	vertices.push_back(Vertex{ 0.0f, -radius, 0.0 });
-
-
 
 	for (int i = 1; i <= stackCount - 1; i++) 
 	{
@@ -80,7 +76,7 @@ Sphere::Sphere(Renderer& render, float x, float y, float z,  float radius, int s
 										std::to_string(pos.y) + ", " +
 										std::to_string(pos.z) + "}\n" ;
 
-			OutputDebugString(debug.c_str());
+			//OutputDebugString(debug.c_str());
 
 		}
 	}
@@ -178,4 +174,15 @@ DirectX::XMMATRIX Sphere::GetTransformXM() const noexcept
 	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
 		DirectX::XMMatrixTranslation(x, y, z);
+}
+
+void Sphere::setTransformXYZ(float X, float Y, float Z)
+{
+	x = X;
+	y = Y;
+	z = Z;
+}
+Vec3 Sphere::getTransformXYZ()
+{
+	return Vec3(x,y,z);
 }

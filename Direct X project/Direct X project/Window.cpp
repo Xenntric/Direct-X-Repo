@@ -98,16 +98,32 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			PostQuitMessage(000);
 			return 0;
 		}
-
-		//keyboard input
-		case WM_CHAR:
+		case WM_KILLFOCUS:
 		{
-			//clears and appends windows title to user input
-			static std::string title;
-			title.push_back((char)wParam);
-			SetWindowTitle(title);
+			keyboard.clearState();
 			break;
 		}
+
+		//keyboard input
+		case WM_KEYDOWN:
+		{
+			if (!(lParam & 0x40000000) || keyboard.isAutoRepeatEnabled())
+			{
+				keyboard.onKeyPressed(static_cast<unsigned char>(wParam));
+			}
+			break;
+		}
+		case WM_KEYUP:
+		{
+			keyboard.onKeyReleased(static_cast<unsigned char>(wParam));
+			break;
+		}		
+		case WM_CHAR:
+		{
+			keyboard.onChar(static_cast<unsigned char>(wParam));
+			break;
+		}
+
 
 		//mouse input
 		case WM_LBUTTONDOWN:
@@ -138,7 +154,7 @@ void Window::SetWindowTitle(const std::string& title)
 {
 	if (SetWindowText (hWnd, title.c_str()) == 0)
 	{
-		throw WND_PREVIOUS_EXCEPT();
+		//throw WND_PREVIOUS_EXCEPT();
 	}
 }
 
@@ -146,7 +162,7 @@ void Window::SetWindowTitle(const std::string& title)
 std::optional<int> Window::ProcessMessages()
 {
 	MSG msg;
-	BOOL getResult;
+	//BOOL getResult;
 
 	while ((PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) > 0)
 	{

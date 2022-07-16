@@ -4,22 +4,28 @@
 #include "Sphere.h"
 #include <memory>
 
+#include<iostream>
+#include<string>
+
 Game::Game()
 	:
-	wnd(800, 600, "Factory Pattern Refactor!! :D")
+	wnd(800, 600, "Sphere!!!!! :D")
 {
 	//init cubes
-	/*for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 4; i++)
 	{
 		cubes.push_back(std::make_unique<Cube>(
 			wnd.Render(), i*5, 5.0f, 15.0f));
 		
-	}*/
+	}
 	for (auto i = 0; i < 1; i++)
 	{
 		spheres.push_back(std::make_unique<Sphere>(
-			wnd.Render(),0.0f, 5.0f, 15.0f, 3.0f, 20.0f, 20.0f));
+			wnd.Render(),0.0f, 5.0f, 0.0f, 3.0f, 20.0f, 20.0f));
 	}
+
+	wnd.Render().SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
+	
 	wnd.Render().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
 
@@ -31,8 +37,40 @@ int Game::init()
 		{
 			return *ecode;
 		}
+		Inputs();
 		Update();
 		Render();
+	}
+}
+
+void Game::Inputs()
+{
+	auto Player = spheres.at(0).get();
+	std::string debugW = "W\n";
+	std::string debugA = "A\n";
+	std::string debugS = "S\n";
+	std::string debugD = "D\n";
+	if (wnd.keyboard.keyPressed('W'))
+	{
+		Player->setTransformXYZ(Player->getTransformXYZ().x,Player->getTransformXYZ().y + .1F ,0);
+		
+		OutputDebugString(debugW.c_str());
+	}
+	if (wnd.keyboard.keyPressed('A'))
+	{
+		Player->setTransformXYZ(Player->getTransformXYZ().x - .1F, Player->getTransformXYZ().y, 0);
+		OutputDebugString(debugA.c_str());
+		cubes[1].get();
+	}
+	if (wnd.keyboard.keyPressed('S'))
+	{
+		Player->setTransformXYZ(Player->getTransformXYZ().x , Player->getTransformXYZ().y - .1F, 0);
+		OutputDebugString(debugS.c_str());
+	}
+	if (wnd.keyboard.keyPressed('D'))
+	{
+		Player->setTransformXYZ(Player->getTransformXYZ().x + .1F, Player->getTransformXYZ().y, 0);
+		OutputDebugString(debugD.c_str());
 	}
 }
 
@@ -44,7 +82,7 @@ void Game::Update()
 	{
 		c->Update(dt);
 	}
-	for (auto& s : cubes)
+	for (auto& s : spheres)
 	{
 		s->Update(dt);
 	}
@@ -68,6 +106,7 @@ void Game::Render()
 
 	wnd.Render().EndFrame();
 }
+
 Game::~Game()
 {
 }
