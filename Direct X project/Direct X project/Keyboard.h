@@ -82,3 +82,4 @@ template<typename T>
 inline void Keyboard::trimBuffer(std::queue<T>& buffer) noexcept
 {
 }
+

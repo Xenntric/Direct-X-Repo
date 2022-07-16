@@ -102,6 +102,9 @@
     <ClCompile Include="KeyboardClass.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinHeader.h">
@@ -177,6 +180,9 @@
       <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardClass.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
