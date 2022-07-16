@@ -28,15 +28,30 @@
     <Filter Include="Header Files\Shapes">
       <UniqueIdentifier>{a8b9f14f-c39f-4d99-8870-17e369a8efb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core Classes">
-      <UniqueIdentifier>{2dca5364-fb99-43f5-a84e-f3b2c5e4043c}</UniqueIdentifier>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{ce920e4e-c349-4c8f-ac5b-b6193cc50bce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Core Classes">
-      <UniqueIdentifier>{2918793e-8824-41e2-9e9e-cbceb6883976}</UniqueIdentifier>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{c4649d8d-257a-4c91-8860-e82ae7c87ff3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ExceptionHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Loadable.cpp">
@@ -60,6 +75,9 @@
     <ClCompile Include="TransformBuffer.cpp">
       <Filter>Source Files\Loaders cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Topology.cpp">
       <Filter>Source Files\Loaders cpp</Filter>
     </ClCompile>
@@ -75,42 +93,33 @@
     <ClCompile Include="Vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameTimer.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files\Core Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Drawable.cpp">
-      <Filter>Source Files\Loaders cpp</Filter>
-    </ClCompile>
     <ClCompile Include="DrawableBase.cpp">
-      <Filter>Source Files\Loaders cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Controls.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardClass.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="WinHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ExceptionHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bindable.h">
@@ -137,6 +146,9 @@
     <ClInclude Include="Topology.h">
       <Filter>Header Files\Loaders h</Filter>
     </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="BindableTemplate.h">
       <Filter>Header Files\Loaders h</Filter>
     </ClInclude>
@@ -155,41 +167,17 @@
     <ClInclude Include="Vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTimer.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="WinHeader.h">
-      <Filter>Header Files\Core Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Drawable.h">
-      <Filter>Header Files\Loaders h</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableBase.h">
-      <Filter>Header Files\Loaders h</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IndexedTriangleList.h">
-      <Filter>Header Files\Loaders h</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardClass.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

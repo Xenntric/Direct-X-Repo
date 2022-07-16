@@ -1,5 +1,14 @@
-﻿  Sphere.cpp
-F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(23,9): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(24,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\Direct X project\Sphere.cpp(117,42): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Direct X project.vcxproj -> F:\University-year3\Advanced Technologies\DirectX\Direct X Repo\Direct X project\x64\Debug\Direct X project.exe
+﻿  Game.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Matthew\source\repos\Direct-X-Repo\Direct X project\Direct X project\Game.cpp(15): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,int,float,float,0>(Renderer &,int &&,float &&,float &&)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\Matthew\source\repos\Direct-X-Repo\Direct X project\Direct X project\Game.cpp(22): message : see reference to function template instantiation 'std::unique_ptr<Sphere,std::default_delete<Sphere>> std::make_unique<Sphere,Renderer&,float,float,float,float,float,float,0>(Renderer &,float &&,float &&,float &&,float &&,float &&,float &&)' being compiled
+  Direct X project.vcxproj -> C:\Users\Matthew\Source\Repos\Direct-X-Repo\Direct X project\x64\Debug\Direct X project.exe

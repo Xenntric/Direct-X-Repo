@@ -98,32 +98,59 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 			PostQuitMessage(000);
 			return 0;
 		}
-		case WM_KILLFOCUS:
-		{
-			keyboard.clearState();
-			break;
-		}
 
 		//keyboard input
+
 		case WM_KEYDOWN:
 		{
-			if (!(lParam & 0x40000000) || keyboard.isAutoRepeatEnabled())
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			if (keyboard.IsKeyAutoRepeat())
 			{
-				keyboard.onKeyPressed(static_cast<unsigned char>(wParam));
+				keyboard.OnKeyPressed(keycode);
 			}
-			break;
-		}
-		case WM_KEYUP:
-		{
-			keyboard.onKeyReleased(static_cast<unsigned char>(wParam));
-			break;
-		}		
-		case WM_CHAR:
-		{
-			keyboard.onChar(static_cast<unsigned char>(wParam));
-			break;
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					keyboard.OnKeyPressed(keycode);
+				}
+			}
+
+			return 0;
 		}
 
+		case WM_KEYUP:
+		{
+			unsigned char keycode = static_cast<unsigned char>(wParam);
+			keyboard.OnKeyReleased(keycode);
+			return 0;
+		}
+
+
+		case WM_CHAR:
+		{
+			unsigned char ch = static_cast<unsigned char>(wParam);
+			if (keyboard.IsCharAutoRepeat())
+			{
+				keyboard.OnChar(ch);
+			}
+			else
+			{
+				const bool wasPressed = lParam & 0x40000000;
+				if (!wasPressed)
+				{
+					keyboard.OnChar(ch);
+				}
+			}
+			return 0;
+
+			/*//clears and appends windows title to user input
+			static std::string title;
+			title.push_back((char)wParam);
+			SetWindowTitle(title);
+			break;*/
+		}
 
 		//mouse input
 		case WM_LBUTTONDOWN:
@@ -154,7 +181,7 @@ void Window::SetWindowTitle(const std::string& title)
 {
 	if (SetWindowText (hWnd, title.c_str()) == 0)
 	{
-		//throw WND_PREVIOUS_EXCEPT();
+		throw WND_PREVIOUS_EXCEPT();
 	}
 }
 
@@ -162,7 +189,7 @@ void Window::SetWindowTitle(const std::string& title)
 std::optional<int> Window::ProcessMessages()
 {
 	MSG msg;
-	//BOOL getResult;
+	BOOL getResult;
 
 	while ((PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) > 0)
 	{

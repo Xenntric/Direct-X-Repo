@@ -1,8 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "GameTimer.h"
-
-
+#include "KeyboardClass.h"
 class Game
 {
 public:
@@ -11,14 +10,14 @@ public:
 	int init();
 	~Game();
 private:
-	void Inputs();
 	void Update();
 	void Render();
+	void Inputs();
 
 private:
 	Window wnd;
 	GameTimer time;
-	Keyboard keyboard;
+	
 	std::vector<std::unique_ptr<class Cube>> cubes;
 	std::vector<std::unique_ptr<class Sphere>> spheres;
 };
